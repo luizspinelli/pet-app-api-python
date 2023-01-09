@@ -1,10 +1,15 @@
-from fastapi import FastAPI
 from decouple import config
+from fastapi import FastAPI
 
-app = FastAPI()
+from routes.UsersRoute import router as UserRouter
+
+app = FastAPI(
+    title="Pet App"
+)
+
+app.include_router(UserRouter, tags=['User'], prefix="/api/users")
 
 
 @app.get("/api/health", tags=["Health"])
 async def health():
-    DB_PASSWORD = config('DB_PASSWORD')
-    return {"status": DB_PASSWORD}
+    return {"result": "ok"}
